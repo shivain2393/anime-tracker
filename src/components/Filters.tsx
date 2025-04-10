@@ -1,33 +1,63 @@
-'use client';
+"use client";
 
-import { AnimeSeasons, capitalize, Seasons } from "@/types/anime";
-import { useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Anime, AnimeSeasons, capitalize, Seasons } from "@/types/anime";
+import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { Input } from "./ui/input";
+import { ScrollArea } from "./ui/scroll-area";
+
+type Query = { season: AnimeSeasons; year: number };
 
 interface FiltersProps {
-    query: { season: AnimeSeasons; year: number; };
-    setQuery: (query: { season: AnimeSeasons; year: number; }) => void;
+  query: Query;
+  setQuery: (query: Query | ((prev: Query) => Query)) => void;
 }
 
-const Filters = ({ query, setQuery }: FiltersProps ) => {
+const Filters = ({ query, setQuery }: FiltersProps) => {
 
-    return (
-        <div className="flex gap-4 items-center">
-            <Select value={query.season} onValueChange={(value) => setQuery({...query, season: value as AnimeSeasons})}>
-                <SelectTrigger className="w-[150px]">
-                    <SelectValue placeholder="Season" />
-                </SelectTrigger>
-                <SelectContent>
-                    {Seasons.map((season) => (
-                        <SelectItem key={season} value={season}>{capitalize(season)}</SelectItem>
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: (currentYear + 2) - 1940 }, (_, i) => (currentYear + 1) - i);
+
+  return (
+    <div className="flex gap-4 items-center">
+      <Select
+        value={query.season}
+        onValueChange={(value) =>
+          setQuery({ ...query, season: value as AnimeSeasons })
+        }
+      >
+        <SelectTrigger className="w-[120px]">
+          <SelectValue placeholder="Season" />
+        </SelectTrigger>
+        <SelectContent>
+          {Seasons.map((season) => (
+            <SelectItem key={season} value={season}>
+              {capitalize(season)}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select value={query.year.toString()} onValueChange={(value) => setQuery({ ...query, year: parseInt(value)})}>
+          <SelectTrigger className="w-[120px]">
+            <SelectValue placeholder="Year" />
+            <SelectContent className="max-h-60">
+                <ScrollArea className="h-60 w-full">
+                    {years.map((year) => (
+                        <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
                     ))}
-                </SelectContent>
-            </Select>
-
-            <Input  type="number" value={query.year} onChange={(e) => setQuery({...query, year: Number(e.target.value)})} className="w-[100px] appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"/>
-        </div>
-    )
-}
+                </ScrollArea>
+            </SelectContent>
+          </SelectTrigger>
+      </Select>
+    </div>
+  );
+};
 
 export default Filters;

@@ -3,8 +3,8 @@ import { graphqlRequest } from "./graphql";
 
 const seasonalAnimeQuery = `
     query($season: MediaSeason, $seasonYear: Int){
-        Page(perPage: 50) {
-            media(season: $season, seasonYear: $seasonYear, type: ANIME, status_in: [RELEASING, NOT_YET_RELEASED]) {
+        Page(perPage: 100) {
+            media(season: $season, seasonYear: $seasonYear, type: ANIME, status_in: [FINISHED, RELEASING, NOT_YET_RELEASED]) {
                 id
                 title {
                     romaji
