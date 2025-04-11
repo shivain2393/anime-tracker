@@ -4,7 +4,6 @@ import AnimeCard from "@/components/AnimeCard";
 import AnimeCardSkeleton from "@/components/AnimeCardSkeleton";
 import Filters from "@/components/Filters";
 import ThemeToggler from "@/components/ThemeToggle";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchSeasonalAnime } from "@/lib/anilist";
 import { getCurrentAnimeSeason } from "@/lib/animeSeason";
@@ -60,7 +59,7 @@ const Home = () => {
         setLoading(false);
       } catch (error) {
         setAnimeList([]);
-        console.log('An error has occurred while fetching data');
+        console.log('An error has occurred while fetching data: g', error);
         setLoading(false);
       }
     };
