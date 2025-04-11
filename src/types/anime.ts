@@ -17,6 +17,7 @@ export interface Anime {
         month: number;
         day: number;
     };
+    genres: string[]
 }
 
 export type AnimeSeasons = 'WINTER' | 'SPRING' | 'SUMMER' | 'FALL' ;

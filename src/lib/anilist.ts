@@ -23,8 +23,15 @@ const seasonalAnimeQuery = `
                     month
                     day
                 }
+                genres
             }
         }
+    }
+`
+
+const genreQuery = `
+    query {
+        GenreCollection
     }
 `
 
@@ -34,4 +41,9 @@ export const fetchSeasonalAnime = async (season: string, year: number) => {
     }>(seasonalAnimeQuery, { season, seasonYear: year});
 
     return data.Page.media;
+}
+
+export const fetchAllGenres = async () => {
+    const data = await graphqlRequest<{ GenreCollection: string[] }>(genreQuery);
+    return data.GenreCollection;
 }

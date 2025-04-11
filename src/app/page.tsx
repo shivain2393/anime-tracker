@@ -19,8 +19,36 @@ const Home = () => {
     year: currentlyAiringAnime.year,
   });
   const [animeList, setAnimeList] = useState<Anime[]>([]);
+  const [filteredAnimes, setFilteredAnimes] = useState<Anime[]>([]);
   const [tabValue, setTabValue] = useState<string>("airing");
   const [loading, setLoading] = useState<boolean>(false);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+
+  const renderAnimeCards = () => {
+    if (loading) {
+      return Array.from({ length: 20 }).map((_, index) => (
+        <AnimeCardSkeleton key={index} />
+      ));
+    }
+
+    if (selectedGenres.length > 0) {
+      if (filteredAnimes.length > 0) {
+        return filteredAnimes.map((anime, index) => (
+          <AnimeCard key={index} anime={anime} />
+        ));
+      } else {
+        return <div>No animes found with selected Genres.</div>;
+      }
+    } else {
+      if (animeList.length > 0) {
+        return animeList.map((anime, index) => (
+          <AnimeCard key={index} anime={anime} />
+        ));
+      } else {
+        return <div>No animes found</div>;
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchAnimes = async () => {
@@ -33,6 +61,16 @@ const Home = () => {
     handleTabChange();
     fetchAnimes();
   }, [query]);
+
+  useEffect(() => {
+    if (selectedGenres.length === 0) return;
+
+    const filtered = animeList.filter((anime) =>
+      anime.genres.some((genre) => selectedGenres.includes(genre))
+    );
+
+    setFilteredAnimes(filtered);
+  }, [selectedGenres]);
 
   const handleTabChange = () => {
     if (
@@ -111,48 +149,25 @@ const Home = () => {
                 {tabText}
               </TabsTrigger>
             </TabsList>
-            <Filters query={query} setQuery={setQuery} />
+            <Filters
+              query={query}
+              setQuery={setQuery}
+              selectedGenres={selectedGenres}
+              setSelectedGenres={setSelectedGenres}
+            />
           </div>
 
           {/* Currently Airing Anime */}
           <TabsContent value="airing" className="mt-0">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-              {loading ? (
-                Array.from({ length: 20 }).map((_, index) => (
-                  <AnimeCardSkeleton key={index} />
-                ))
-              ) : animeList.length > 0 ? (
-                animeList.map((anime, index) => (
-                  <AnimeCard key={index} anime={anime} />
-                ))
-              ) : (
-                <div className="col-span-full text-center py-10">
-                  <p className="text-zinc-500 dark:text-zinc-400">
-                    No animes found.
-                  </p>
-                </div>
-              )}
+              {renderAnimeCards()}
             </div>
           </TabsContent>
 
           {/* filtered anime */}
           <TabsContent value="queryAnimes" className="mt-0">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-              {loading ? (
-                Array.from({ length: 10 }).map((_, index) => (
-                  <AnimeCardSkeleton key={index} />
-                ))
-              ) : animeList.length > 0 ? (
-                animeList.map((anime, index) => (
-                  <AnimeCard key={index} anime={anime} />
-                ))
-              ) : (
-                <div className="col-span-full text-center py-10">
-                  <p className="text-zinc-500 dark:text-zinc-400">
-                    No animes found.
-                  </p>
-                </div>
-              )}
+              {renderAnimeCards()}
             </div>
           </TabsContent>
         </Tabs>
