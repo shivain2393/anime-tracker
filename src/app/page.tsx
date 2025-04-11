@@ -3,6 +3,7 @@
 import AnimeCard from "@/components/AnimeCard";
 import AnimeCardSkeleton from "@/components/AnimeCardSkeleton";
 import Filters from "@/components/Filters";
+import ThemeToggler from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchSeasonalAnime } from "@/lib/anilist";
@@ -52,10 +53,16 @@ const Home = () => {
 
   useEffect(() => {
     const fetchAnimes = async () => {
-      setLoading(true);
-      const data = await fetchSeasonalAnime(query.season, query.year);
-      setAnimeList(data);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const data = await fetchSeasonalAnime(query.season, query.year);
+        setAnimeList(data);
+        setLoading(false);
+      } catch (error) {
+        setAnimeList([]);
+        console.log('An error has occurred while fetching data');
+        setLoading(false);
+      }
     };
 
     handleTabChange();
@@ -103,9 +110,7 @@ const Home = () => {
             AnimeTracker
           </Link>
           {/* Search */}
-          <Button className="bg-zinc-800 hover:bg-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600">
-            My List
-          </Button>
+          <ThemeToggler />
         </div>
       </header>
 
