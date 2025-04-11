@@ -106,7 +106,7 @@ const Home = () => {
       <header className="border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold">
-            AnimeTracker
+            AniHubTracker
           </Link>
           {/* Search */}
           <ThemeToggler />

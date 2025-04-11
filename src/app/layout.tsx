@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Anime Hub | Home",
+  title: "AniHubTracker | Home",
   description: "A fun side project by Shivain Sagar — AnimeTracker lets fellow weebs and anime lovers track their favorite series with ease. Stay organized and never lose track of your next watch!",
 };
 
