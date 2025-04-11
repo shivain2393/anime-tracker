@@ -48,7 +48,7 @@ const Filters = ({ query, setQuery, selectedGenres, setSelectedGenres }: Filters
   }, []);
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4 items-center flex-wrap">
       <Popover>
         <PopoverTrigger asChild>
           <Button

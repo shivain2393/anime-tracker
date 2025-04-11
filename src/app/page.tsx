@@ -120,8 +120,8 @@ const Home = () => {
           onValueChange={(value) => setTabValue(value)}
           className="w-full"
         >
-          <div className="flex justify-between items-center">
-            <TabsList className="bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 mb-6 w-full max-w-md">
+          <div className="flex justify-between items-center flex-wrap mb-6 gap-4 lg:flex-nowrap">
+            <TabsList className="bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 w-full max-w-md">
               <TabsTrigger
                 onClick={() => setQuery(currentlyAiringAnime)}
                 value="airing"
