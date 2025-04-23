@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ThemeToggler from "./ThemeToggle";
 import { Button } from "./ui/button";
+import GithubButton from "./GithubButton";
 
 const Navbar = () => {
   return (
@@ -12,7 +13,10 @@ const Navbar = () => {
         {/* Search */}
         <div className="flex items-center md:gap-4">
           <Button variant='ghost' size='lg'><Link href='/about'>About</Link></Button>
-          <ThemeToggler />
+          <div className="flex items-center gap-1">
+            <ThemeToggler />
+            <GithubButton />
+          </div>
         </div>
       </div>
     </header>

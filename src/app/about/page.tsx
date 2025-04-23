@@ -51,8 +51,8 @@ const About = () => {
           <div className="pl-1 flex items-center gap-2">
             <FaGithub className="text-xl" />
             <Button className="pl-0" variant="link">
-              <Link href="https://github.com/shivain2393/anime-tracker" target="_blank">
-                Github Repository
+              <Link href="https://github.com/shivain2393" target="_blank">
+                Github
               </Link>
             </Button>
           </div>
