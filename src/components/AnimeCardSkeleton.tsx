@@ -7,7 +7,7 @@ const AnimeCardSkeleton = () => {
       <div className="flex flex-col h-full">
         
         {/* Image + Badge placeholder */}
-        <div className="relative aspect-[4/5]">
+        <div className="relative aspect-[5/5]">
           <Skeleton className="absolute inset-0 w-full h-full rounded-none" />
           <Skeleton className="absolute top-2 right-2 h-6 w-16 rounded-full" />
         </div>

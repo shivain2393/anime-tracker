@@ -4,7 +4,7 @@ import { graphqlRequest } from "./graphql";
 const seasonalAnimeQuery = `
     query($season: MediaSeason, $seasonYear: Int){
         Page(perPage: 100) {
-            media(season: $season, seasonYear: $seasonYear, type: ANIME, status_in: [FINISHED, RELEASING, NOT_YET_RELEASED]) {
+            media(season: $season, seasonYear: $seasonYear, type: ANIME, status_in: [FINISHED, RELEASING, NOT_YET_RELEASED], sort: [POPULARITY_DESC]) {
                 id
                 title {
                     romaji
@@ -24,6 +24,9 @@ const seasonalAnimeQuery = `
                     day
                 }
                 genres
+                popularity
+                averageScore
+                description
             }
         }
     }

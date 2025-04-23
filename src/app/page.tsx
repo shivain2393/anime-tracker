@@ -7,21 +7,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Wrapper from "@/components/Wrapper";
 import { fetchSeasonalAnime } from "@/lib/anilist";
 import { getCurrentAnimeSeason } from "@/lib/animeSeason";
-import { Anime, capitalize, Seasons } from "@/types/anime";
+import { capitalize } from "@/lib/utils";
+import { Anime, Seasons, Query, SortBy, TabValue } from "@/types/anime";
 import { useEffect, useState } from "react";
 
 const Home = () => {
   const currentlyAiringAnime = getCurrentAnimeSeason();
   const [tabText, setTabText] = useState<string>("Upcoming Season");
-  const [query, setQuery] = useState({
+  const [query, setQuery] = useState<Query>({
     season: currentlyAiringAnime.season,
     year: currentlyAiringAnime.year,
   });
   const [animeList, setAnimeList] = useState<Anime[]>([]);
   const [filteredAnimes, setFilteredAnimes] = useState<Anime[]>([]);
-  const [tabValue, setTabValue] = useState<string>("airing");
+  const [tabValue, setTabValue] = useState<TabValue>("airing");
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<SortBy>({
+    field: "popularity",
+    order: "desc",
+  });
+
+  console.log(animeList)
+
 
   const renderAnimeCards = () => {
     if (loading) {
@@ -57,6 +65,68 @@ const Home = () => {
     }
   };
 
+  const sortAnimeList = (list: Anime[]): Anime[] => {
+    const field = sortBy.field;
+
+    const currentList = [...list];
+
+    switch (field) {
+      case "popularity":
+        if (sortBy.order === "asc") {
+          return currentList.sort((a, b) => a.popularity - b.popularity);
+        }
+        return currentList.sort((a, b) => b.popularity - a.popularity);
+
+      case "score":
+        if (sortBy.order === "asc") {
+          return currentList.sort((a, b) => a.averageScore - b.averageScore);
+        }
+        return currentList.sort((a, b) => b.averageScore - a.averageScore);
+
+      case "title":
+        if (sortBy.order === "asc") {
+          return currentList.sort((a, b) =>
+            a.title.romaji.localeCompare(b.title.romaji)
+          );
+        }
+        return currentList.sort((a, b) =>
+          b.title.romaji.localeCompare(a.title.romaji)
+        );
+
+      case "start date":
+        if (sortBy.order === "asc") {
+          return currentList.sort(
+            (a, b) =>
+              new Date(a.startDate.year, a.startDate.month, a.startDate.day)
+                .getTime() -
+              new Date(b.startDate.year, b.startDate.month, b.startDate.day)
+                .getTime()
+          );
+        }
+        return currentList.sort(
+          (a, b) =>
+            new Date(b.startDate.year, b.startDate.month, b.startDate.day)
+              .getTime() -
+            new Date(a.startDate.year, a.startDate.month, a.startDate.day)
+              .getTime()
+        );
+      default:
+        return currentList;
+    }
+  };
+
+  useEffect(() => {
+    if(filteredAnimes.length > 0) {
+      const sortedAnimes = sortAnimeList(filteredAnimes);
+      setFilteredAnimes(sortedAnimes);
+    }
+
+    if (animeList.length > 0) {
+      const sortedAnimes = sortAnimeList(animeList);
+      setAnimeList(sortedAnimes);
+    }
+  }, [sortBy]);
+
   useEffect(() => {
     const fetchAnimes = async () => {
       try {
@@ -83,7 +153,7 @@ const Home = () => {
     );
 
     setFilteredAnimes(filtered);
-  }, [selectedGenres]);
+  }, [selectedGenres, animeList]);
 
   const handleTabChange = () => {
     if (
@@ -105,16 +175,21 @@ const Home = () => {
       setTabText(`${capitalize(query.season)}, ${query.year}`);
       setTabValue("queryAnimes");
     }
+
+    setSortBy({
+      field: "popularity",
+      order: "desc",
+    })
   };
 
   return (
     <Wrapper>
       <Tabs
         value={tabValue}
-        onValueChange={(value) => setTabValue(value)}
+        onValueChange={(value) => setTabValue(value as TabValue)}
         className="w-full"
       >
-        <div className="flex justify-between items-center flex-wrap mb-6 gap-4 lg:flex-nowrap">
+        <div className="flex justify-between items-center flex-wrap mb-6 gap-4 xl:flex-nowrap">
           <TabsList className="bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 w-full max-w-md">
             <TabsTrigger
               onClick={() => setQuery(currentlyAiringAnime)}
@@ -152,6 +227,9 @@ const Home = () => {
             setQuery={setQuery}
             selectedGenres={selectedGenres}
             setSelectedGenres={setSelectedGenres}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            disabled={loading}
           />
         </div>
 
