@@ -153,6 +153,16 @@ const Home = () => {
   }, [selectedGenres, animeList]);
 
   const handleTabChange = () => {
+
+    const currentSeasonIndex = Seasons.findIndex(
+      (s) => s === currentlyAiringAnime.season
+    );
+    const nextSeasonIndex = (currentSeasonIndex + 1) % Seasons.length;
+    const nextSeason = Seasons[nextSeasonIndex];
+    const nextYear =
+      nextSeasonIndex === 0 ? currentlyAiringAnime.year + 1 : currentlyAiringAnime.year;
+
+
     if (
       query.season === currentlyAiringAnime.season &&
       query.year === currentlyAiringAnime.year
@@ -160,11 +170,7 @@ const Home = () => {
       setTabText("Upcoming Season");
       setTabValue("airing");
     } else if (
-      query.season ===
-      Seasons[
-        (Seasons.findIndex((s) => s === currentlyAiringAnime.season) + 1) %
-          Seasons.length
-      ]
+      query.season === nextSeason && query.year === nextYear
     ) {
       setTabText("Upcoming Season");
       setTabValue("queryAnimes");
