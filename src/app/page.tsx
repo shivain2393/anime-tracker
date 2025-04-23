@@ -28,9 +28,6 @@ const Home = () => {
     order: "desc",
   });
 
-  console.log(animeList)
-
-
   const renderAnimeCards = () => {
     if (loading) {
       return Array.from({ length: 20 }).map((_, index) => (

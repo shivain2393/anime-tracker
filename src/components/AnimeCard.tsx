@@ -27,6 +27,7 @@ const AnimeCard = ({ anime } : { anime: Anime }) => {
                 <div className="relative aspect-[5/5]">
                     <Image src={anime.coverImage.large} alt={anime.title.romaji} 
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
                     quality={100}
                     className="object-cover"/>
                     <Badge className="absolute top-2 right-2 bg-zinc-800 dark:bg-zinc-700 text-white">EP {airedEpisodes} / {anime.episodes ?? '?'}</Badge>
