@@ -1,4 +1,4 @@
-export interface Anime {
+export type Anime = {
   id: number;
   title: {
     romaji: string;
@@ -35,6 +35,6 @@ export type Query = { season: AnimeSeasons; year: number };
 
 export type SortBy = { field: string; order: Order };
 
-export const sortOptions: string[] = ["popularity", "score", "title", "start date"];
+export const sortOptions: string[] = ["popularity", "score", "countdown", "title", "start date"];
 
 

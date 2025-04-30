@@ -67,7 +67,7 @@ const Filters = ({
 
   return (
     <div className="flex gap-4 items-center flex-wrap">
-      <Popover >
+      <Popover modal={true}>
         <PopoverTrigger asChild disabled={disabled}>
           <Button
             variant="outline"
@@ -109,7 +109,7 @@ const Filters = ({
             </div>
         </PopoverContent>
       </Popover>
-      <Popover>
+      <Popover modal={true}>
         <PopoverTrigger asChild disabled={disabled}>
           <Button
             variant="outline"

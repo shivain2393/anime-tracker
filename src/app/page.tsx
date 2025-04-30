@@ -80,6 +80,18 @@ const Home = () => {
         }
         return currentList.sort((a, b) => b.averageScore - a.averageScore);
 
+      case "countdown":
+        return currentList.sort((a, b) => {
+          const aTimeLeft = a.nextAiringEpisode?.airingAt ?? 0;
+          const bTimeLeft = b.nextAiringEpisode?.airingAt ?? 0;
+
+          if(sortBy.order === "asc") {
+            return aTimeLeft - bTimeLeft;
+          }
+
+          return bTimeLeft - aTimeLeft;
+        })
+
       case "title":
         if (sortBy.order === "asc") {
           return currentList.sort((a, b) =>

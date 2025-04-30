@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa"
 
 const GithubButton = () => {
     return (
-        <Button className="cursor-pointer" size='icon' variant='ghost'>
+        <Button className="cursor-pointer" size='icon' variant='ghost' asChild>
             <Link href="https://github.com/shivain2393/anime-tracker">
                 <FaGithub />
             </Link>
