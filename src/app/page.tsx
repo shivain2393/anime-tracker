@@ -27,6 +27,7 @@ const Home = () => {
     field: "popularity",
     order: "desc",
   });
+  const [disableInputs, setDisableInputs] = useState<boolean>(false);
 
   const renderAnimeCards = () => {
     if (loading) {
@@ -140,16 +141,20 @@ const Home = () => {
     const fetchAnimes = async () => {
       try {
         setLoading(true);
+        setDisableInputs(true);
         const data = await fetchSeasonalAnime(query.season, query.year);
         setAnimeList(data);
         setLoading(false);
+        setDisableInputs(false);
       } catch (error) {
         setAnimeList([]);
         console.log("An error has occurred while fetching data: ", error);
+        setDisableInputs(true);
         setLoading(false);
       }
     };
-
+    
+    setSelectedGenres([]);
     handleTabChange();
     fetchAnimes();
   }, [query]);
@@ -201,35 +206,43 @@ const Home = () => {
     <Wrapper>
       <Tabs
         value={tabValue}
-        onValueChange={(value) => setTabValue(value as TabValue)}
         className="w-full"
       >
         <div className="flex justify-between items-center flex-wrap mb-6 gap-4 xl:flex-nowrap">
           <TabsList className="bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 w-full max-w-md">
             <TabsTrigger
-              onClick={() => setQuery(currentlyAiringAnime)}
+              disabled={disableInputs}
+              onClick={() => {
+                if(tabValue !== "airing") {
+                  setQuery(currentlyAiringAnime);
+                }
+              }}
               value="airing"
               className="w-1/2 data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-700 data-[state=active]:text-zinc-900 dark:data-[state=active]:text-zinc-100"
             >
               Currently Airing
             </TabsTrigger>
             <TabsTrigger
+              disabled={disableInputs}
               onClick={() => {
-                if (query.season === "FALL") {
-                  setQuery({ ...query, year: query.year + 1 });
+                if(tabValue !== "queryAnimes" && filteredAnimes.length === 0) {
+                  if (query.season === "FALL") {
+                    setQuery({ ...query, year: query.year + 1 });
+                  }
+  
+                  setQuery({
+                    ...query,
+                    season:
+                      Seasons[
+                        (Seasons.findIndex(
+                          (s) => s === currentlyAiringAnime.season
+                        ) +
+                          1) %
+                          Seasons.length
+                      ],
+                  });
+                  setSelectedGenres([]);
                 }
-
-                setQuery({
-                  ...query,
-                  season:
-                    Seasons[
-                      (Seasons.findIndex(
-                        (s) => s === currentlyAiringAnime.season
-                      ) +
-                        1) %
-                        Seasons.length
-                    ],
-                });
               }}
               value="queryAnimes"
               className="w-1/2 data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-700 data-[state=active]:text-zinc-900 dark:data-[state=active]:text-zinc-100"
@@ -244,7 +257,7 @@ const Home = () => {
             setSelectedGenres={setSelectedGenres}
             sortBy={sortBy}
             setSortBy={setSortBy}
-            disabled={loading}
+            disabled={disableInputs}
           />
         </div>
 
