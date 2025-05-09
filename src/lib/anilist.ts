@@ -27,6 +27,7 @@ const seasonalAnimeQuery = `
                 popularity
                 averageScore
                 description
+                siteUrl
             }
         }
     }

@@ -21,6 +21,7 @@ export type Anime = {
   popularity: number;
   averageScore: number;
   description: string;
+  siteUrl: string;
 }
 
 export type AnimeSeasons = "WINTER" | "SPRING" | "SUMMER" | "FALL";

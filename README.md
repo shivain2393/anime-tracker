@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧭 Anime Tracker
 
-## Getting Started
+A modern and minimal anime tracking web app powered by [AniList GraphQL API](https://docs.anilist.co/). Track upcoming episodes, view countdowns, sort and filter anime by popularity, score, air date, and more — all with a clean and responsive UI.
 
-First, run the development server:
+![Banner](./public/banner-img.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🌐 Live Demo
+
+👉 [Visit the live site](https://anihubtracker.netlify.app/)
+
+## ✨ Features
+
+-   📆 Countdown timer for next airing episodes
+-   🔍 Sort & filter anime by:
+    -   Popularity
+    -   Score
+    -   Start date
+    -   Countdown (airing time left)
+    -   Title
+-   🌗 Dark/light mode support
+-   🖥️ Fully responsive layout
+-   🔗 Deep linking to AniList pages
+
+## 🚀 Tech Stack
+
+-   **Frontend:** [Next.js](https://nextjs.org/), [TypeScript](https://www.typescriptlang.org/)
+-   **UI:** [Tailwind CSS](https://tailwindcss.com/), [ShadCN UI](https://ui.shadcn.com/)
+-   **Data Source:** [AniList GraphQL API](https://docs.anilist.co/)
+-   **Icons:** [React Icons](https://react-icons.github.io/react-icons/), [Lucide React](https://lucide.dev/)
+
+## 🛠️ Setup Instructions
+
+1. **Clone the repository**
+
+    ```
+    git clone https://github.com/shivain2393/anime-tracker.git
+    cd anime-tracker
+    ```
+
+2. **Install dependencies**
+
+    ```
+    npm install
+    ```
+
+3. **Run the development server**
+    ```
+    npm run dev
+    ```
+4. ****Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.**
+
+## 📂 Project Structure
+
+```
+anime-tracker/
+├── src/
+│   ├── app/                # Next.js app directory
+│   ├── components/         # Reusable UI components
+│   ├── lib/                # Utility functions and API integrations
+│   ├── types/              # TypeScript type definitions
+│   └── utils/              # Helper functions
+├── public/                 # Static assets
+├── .next/                  # Next.js build output (ignored in Git)
+├── package.json            # Project dependencies and scripts
+├── tsconfig.json           # TypeScript configuration
+├── next.config.ts          # Next.js configuration
+└── README.md               # Project documentation
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧪 Testing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Currently, this project does not include automated tests. Contributions to add testing are welcome!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🤝 Contributing
 
-## Learn More
+Contributions are welcome! If you'd like to contribute, please fork the repository and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
 
-To learn more about Next.js, take a look at the following resources:
+## 📜 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is licensed under the MIT License. See the [LICENSE](LI CENSE)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📧 Contact
 
-## Deploy on Vercel
+If you have any questions or feedback, feel free to reach out:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+-   **GitHub:** [shivain2393](https://github.com/shivain2393)
+-   **Email:** [shivain.sagar@gmail.com](mailto:shivain.sagar@gmail.com)
