@@ -47,7 +47,7 @@ A modern and minimal anime tracking web app powered by [AniList GraphQL API](htt
     ```
     npm run dev
     ```
-4. ****Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.**
+4. **Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.**
 
 ## 📂 Project Structure
 
